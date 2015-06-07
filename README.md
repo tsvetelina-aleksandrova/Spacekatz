@@ -10,9 +10,9 @@
 *We call these birds plirds.*
 *They are our worst enemy yet. And they smell bad.*
 
-*_Your mission is to save the world!*
-*Your prize - the endless gratitude of mankind!*
-*And chocolate chip cookies with coffee served by hot babes._*
+***Your mission is to save the world!***
+***Your prize - the endless gratitude of mankind!***
+***And chocolate chip cookies with coffee served by hot babes.***
 
 ...but enough sweet talk
 
