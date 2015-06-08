@@ -1,4 +1,6 @@
-def Score(DBObject):
+from sources.db_obj import DBObject
+
+class Score(DBObject):
 	def __init__(self, user_name, points):
 		DBObject.__init__(self)
 		self.__user_name = user_name
@@ -20,18 +22,18 @@ def Score(DBObject):
 			}
 
 	def __eq__(self, other):
-    	if type(self) != type(other):
-    		err_msg = 'Comparing objects of type {} and {}'.format(
-    			type(self), type(other))
-        	raise ValueError(err_msg)
-        if self.is_id_set() and other.is_id_set()
-    		return self.get_id() = other.get_id()
-    	err_msg = "Scores should have ids in order to be compared"
-    	raise AttributeError(err_msg)
+		if not type(self) == type(other):
+			err_msg = 'Comparing objects of type {} and {}'.format(
+				type(self), type(other))
+			raise ValueError(err_msg)
+		if self.is_id_set() and other.is_id_set():
+			return self.get_id() == other.get_id()
+		err_msg = "Scores should have ids in order to be compared"
+		raise AttributeError(err_msg)
 
 	def __str__(self):
 		return " ".join([
 			"User:", 
 			self.__user_name, 
 			"Score:", 
-			self.__points])
+			str(self.__points)])
