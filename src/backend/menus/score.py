@@ -1,13 +1,13 @@
 from sources.backend.db.db_obj import DBObject
 
 class Score(DBObject):
-	def __init__(self, user_name, points):
+	def __init__(self, player_name, points):
 		DBObject.__init__(self)
-		self.__user_name = user_name
+		self.__player_name = player_name
 		self.__points = points
 
-	def get_user_name(self):
-		return self.__user_name
+	def get_player_name(self):
+		return self.__player_name
 
 	def get_points(self):
 		return self.__points
@@ -17,7 +17,7 @@ class Score(DBObject):
 
 	def get_as_map(self):
 		return {
-			"user": self.get_user_name(),
+			"user": self.get_player_name(),
 			"points": self.get_points()
 			}
 
@@ -33,7 +33,7 @@ class Score(DBObject):
 
 	def __str__(self):
 		return " ".join([
-			"User:", 
-			self.__user_name, 
+			"Player:", 
+			self.__player_name, 
 			"Score:", 
 			str(self.__points)])

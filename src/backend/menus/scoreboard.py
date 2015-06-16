@@ -18,7 +18,7 @@ class Scoreboard:
 		scores_list = []
 		scores_json = self.db_score_worker.get_all()
 		for score_map in scores_json:
-			score_obj = Score(score_map["user"], score_map["points"])
+			score_obj = Score(score_map["player"], score_map["points"])
 			score_obj.set_id(score_map["_id"])
 			scores_list.append(score_obj)
 		return scores_list
@@ -31,4 +31,7 @@ class Scoreboard:
 			raise TypeError(self.__type_err_msg)
 		self.db_score_worker.delete(score_to_delete)
 
-		
+	def show(self):
+		scores_list = self.get_all()
+		for score in scores_list:
+			print(score)
