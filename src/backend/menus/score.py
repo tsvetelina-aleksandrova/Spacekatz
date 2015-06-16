@@ -1,4 +1,4 @@
-from sources.db_obj import DBObject
+from sources.backend.db.db_obj import DBObject
 
 class Score(DBObject):
 	def __init__(self, user_name, points):

@@ -1,11 +1,11 @@
-import sources.game
-from sources.rank_list import RankList
-from sources.score import Score
+import sources.ui.game
+from sources.backend.scoreboard import Scoreboard
+from sources.backend.score import Score
 
 sources.game.play()
 
 """
-list = RankList()
+list = Scoreboard()
 score1 = Score("test1", 1)
 score2 = Score("test2", 2)
 score3 = Score("test3", 3)

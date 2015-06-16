@@ -1,9 +1,8 @@
 from pymongo import MongoClient
 from pymongo import ASCENDING, DESCENDING
-from sources.db_obj import DBObject
+from sources.backend.db.db_obj import DBObject
 
 class DBWorker:
-
 	def __init__(self):
 		# connect to default port 28017 on localhost 
 		self.client = MongoClient()
