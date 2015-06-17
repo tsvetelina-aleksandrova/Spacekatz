@@ -6,8 +6,11 @@ class Bird:
 		self.move_strategy = move_strategy
 
 	def move(self):
+		self.position.x += self.move_strategy.get_delta_x()
+		self.position.y += self.move_strategy.get_delta_y()
 		print("Moved according to the strategy")
 
 	def shoot(self):
+		# make it random
 		bullet = Bullet(self.position, self.strength)
 		bullet.move()

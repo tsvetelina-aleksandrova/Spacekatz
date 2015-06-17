@@ -16,9 +16,9 @@ class Game:
 	def start(self):
 		self.current_level = 0
 		self.levels[self.current_level].start()
-		self.board.show()
 
 	def pause(self):
+		self.levels[self.current_level].pause()
 		menu = GameMenu(self)
 		menu.show()
 		
@@ -27,9 +27,10 @@ class Game:
 
 	def resume(self):
 		print("Gameplay is resumed")
-		self.board.show()
+		self.levels[self.current_level].start()
 
 	def end(self):
+		self.levels[self.current_level].pause()
 		print("Game is ended")
 		for player in self.players:
 			self.scoreboard.add(Score(player.name, player.score))
@@ -40,7 +41,9 @@ class Game:
 
 
 	def next_level(self):
+		self.levels[self.current_level].pause()
 		if self.current_level == len(self.levels) - 1:
+			print("No more levels. Game is completed!")
 			self.end()
 		else:
 			self.current_level += 1

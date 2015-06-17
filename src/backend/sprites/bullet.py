@@ -4,8 +4,4 @@ class Bullet:
 		self.strength = strength # min = 1, max = 5
 
 	def move(self):
-		pass
-
-	def boom(self):
-		pass
-		
+		self.position.y += 20
