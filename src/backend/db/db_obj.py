@@ -14,7 +14,7 @@ class DBObject:
     def get_id(self):
         return self.__id
 
-    def get_as_map(self):
+    def get_as_dict(self):
         if self.is_id_set():
             return {"id": self.get_id()}
         return {}

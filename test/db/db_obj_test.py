@@ -23,13 +23,13 @@ class DBObjectTest(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.test_db_obj.set_id(id_num)
 
-    def test_get_as_map_no_id(self):
-        self.assertDictEqual(self.test_db_obj.get_as_map(), {})
+    def test_get_as_dict_no_id(self):
+        self.assertDictEqual(self.test_db_obj.get_as_dict(), {})
 
-    def test_get_as_map_with_id(self):
+    def test_get_as_dict_with_id(self):
         self.test_db_obj.set_id(self.id_str)
         expected_dict = {"id": "1234"}
-        self.assertDictEqual(self.test_db_obj.get_as_map(), expected_dict)
+        self.assertDictEqual(self.test_db_obj.get_as_dict(), expected_dict)
 
 
 if __name__ == '__main__':
