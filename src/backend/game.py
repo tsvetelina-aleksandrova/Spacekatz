@@ -31,6 +31,7 @@ class Game:
 
 	def end(self):
 		self.levels[self.current_level].pause()
+		self.board.clear()
 		print("Game is ended")
 		for player in self.players:
 			self.scoreboard.add(Score(player.name, player.score))
@@ -42,6 +43,7 @@ class Game:
 
 	def next_level(self):
 		self.levels[self.current_level].pause()
+		self.board.clear()
 		if self.current_level == len(self.levels) - 1:
 			print("No more levels. Game is completed!")
 			self.end()
