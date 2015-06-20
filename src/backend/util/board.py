@@ -28,12 +28,12 @@ class Board:
 
 	def get_kat_on_pos(self, x, y):
 		for player in self.players:
-			if player.position.x == x and player.position.y = y:
+			if player.position.x == x and player.position.y == y:
 				return player
 
 	def get_bird_on_pos(self, x, y):
 		for enemy in self.enemies:
-			if enemy.position.x == x and enemy.position.y = y:
+			if enemy.position.x == x and enemy.position.y == y:
 				return enemy
 
 	def clear(self):

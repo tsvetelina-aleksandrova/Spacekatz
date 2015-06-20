@@ -1,3 +1,6 @@
+from backend.menus.scoreboard import Scoreboard
+from backend.util.board import Board
+
 class Game:
 	def __init__(self, width, height, player_num=1):
 		self.scoreboard = Scoreboard()

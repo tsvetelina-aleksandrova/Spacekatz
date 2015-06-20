@@ -1,35 +1,41 @@
-class MenuOption:
-    def __init__(self, select_action):
-        self.select_action = select_action
-        
-    def select(self):
-        self.select_action()
-        print("Selected menu action was executed")
-
-
-class Menu:
-    pass
-
-
-class StartMenu(Menu):
+class GameMenu:
     def __init__(self, game):
-        Menu.__init__(self)
-        self.start = MenuOption(game.start)
-        self.show_scoreboard = MenuOption(game.load_scoreboard)
-        self.exit = MenuOption(game.exit)
+        self.game = game
+        self.options = {}
+
+    def select(self, option):
+        if option not in self.options.keys():
+            raise ValueError("Unexpected menu option was selected")
+        game_option = getattr(self.game, self.options[option])
+
+        if callable(game_option):
+            game_option()
+            print("Selected menu action was executed")
+        else:
+            raise ValueError("Menu option is not valid")
 
     def show(self):
-        print("Start")
-        print("Show scoreboard")
-        print("Exit")
+        for option in self.options:
+            print(option)
+
+    def get_available_options(self):
+        return [option for option in self.options.keys()]
 
 
-class GameMenu(Menu):
+class StartGameMenu(GameMenu):
     def __init__(self, game):
-        Menu.__init__(self)
-        self.resume = MenuOption(game.resume)
-        self.end = MenuOption(game.end)
+        GameMenu.__init__(self, game)
+        self.options = {
+            "Start": "start",
+            "Scoreboard": "load_scoreboard",
+            "Exit": "exit"
+        }
 
-    def show(self):
-        print("Resume")
-        print("End game")
+
+class PauseGameMenu(GameMenu):
+    def __init__(self, game):
+        GameMenu.__init__(self, game)
+        self.options = {
+            "Resume": "resume",
+            "End game": "end"
+        }
