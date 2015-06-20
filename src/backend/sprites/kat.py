@@ -19,7 +19,7 @@ class Kat:
 		bullet.move()
 
 	def get_shot(self, strength):
+		print("Kat got shot")
 		self.health -= strength
 		if self.health <= 0:
 			self.is_dead = True
-			# remove from board

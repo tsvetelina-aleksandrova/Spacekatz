@@ -1,3 +1,5 @@
+from random import uniform
+
 class Bird:
 	def __init__(self, position, move_strategy, board):
 		self.position = position # x and y ints
@@ -10,18 +12,19 @@ class Bird:
 	def move(self):
 		self.position.x += self.move_strategy.get_delta_x()
 		self.position.y += self.move_strategy.get_delta_y()
+		print("Moved according to the strategy")
+
 		if self.board[self.position.x][self.position.y] == "^":
 			kat = board.get_kat_on_pos(self.position.x, self.position.y)
 			kat.get_shot()
-		print("Moved according to the strategy")
 
 	def shoot(self):
-		# make it random
-		bullet = Bullet(self.position, self.strength, self.board, False)
-		bullet.move()
+		if uniform(0, 10) > 8:
+			bullet = Bullet(self.position, self.strength, self.board, False)
+			bullet.move()
 
 	def get_shot(self, strength):
+		print("Bird got shot")
 		self.health -= strength
 		if self.health <= 0:
 			self.is_dead = True
-			# remove from board

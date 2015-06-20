@@ -1,4 +1,5 @@
 from backend.menus.scoreboard import Scoreboard
+from backend.menus.menus import GameMenu, StartGameMenu, PauseGameMenu
 from backend.util.board import Board
 
 class Game:
@@ -10,11 +11,11 @@ class Game:
 		
 		self.levels = [Level(1), Level(2), 
 			Level(3), Level(4), Level(5)]
-		
 
 	def init(self):
-		menu = StartMenu(self)
-		menu.show()
+		menu = StartGameMenu(self)
+		menu.display()
+		# get user input
 
 	def start(self):
 		self.current_level = 0
@@ -22,11 +23,12 @@ class Game:
 
 	def pause(self):
 		self.levels[self.current_level].pause()
-		menu = GameMenu(self)
-		menu.show()
+		menu = PauseGameMenu(self)
+		menu.display()
+		# get user input
 		
 	def load_scoreboard(self):
-		self.scoreboard.show()
+		self.scoreboard.display()
 
 	def resume(self):
 		print("Gameplay is resumed")
@@ -42,7 +44,7 @@ class Game:
 
 	def exit(self):
 		print("Game is exited")
-
+		# exit
 
 	def next_level(self):
 		self.levels[self.current_level].pause()

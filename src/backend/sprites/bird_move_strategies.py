@@ -6,6 +6,10 @@ class InPlaceStrategy:
 		return 0
 
 class DiagonalStrategy:
+	# bl, br, tl, tr 
+	# bottom left, bottom right, top left, top right
+	directions = ["bl", "br", "tl", "tr"]
+	
 	# pass diagonally across screen
 	def __init__(self, direction='tl'):
 		self.direction = direction
@@ -16,11 +20,6 @@ class DiagonalStrategy:
 	def get_delta_y(self):
 		pass
 
-	# bl, br, tl, tr 
-	# bottom left, bottom right, top left, top right
-	@static
-	def get_available_directions():
-		return ["bl", "br", "tl", "tr"]
 
 class BlockStrategy:
 	# move in tiny blocks down accross screen

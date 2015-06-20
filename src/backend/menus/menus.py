@@ -14,7 +14,7 @@ class GameMenu:
         else:
             raise ValueError("Menu option is not valid")
 
-    def show(self):
+    def display(self):
         for option in self.options:
             print(option)
 
