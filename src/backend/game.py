@@ -1,16 +1,17 @@
 from backend.menus.scoreboard import Scoreboard
 from backend.menus.menus import GameMenu, StartGameMenu, PauseGameMenu
 from backend.util.board import Board
+# from backend.sprites.kat import Player
 
 class Game:
 	def __init__(self, width, height, player_num=1):
 		self.scoreboard = Scoreboard()
 		self.board = Board(width, height)
 		self.player_num = player_num
-		self.players = [Player() for i in range(player_num)]
+		# self.players = [Player() for i in range(player_num)]
 		
-		self.levels = [Level(1), Level(2), 
-			Level(3), Level(4), Level(5)]
+		#self.levels = [Level(1), Level(2), 
+		#	Level(3), Level(4), Level(5)]
 
 	def init(self):
 		menu = StartGameMenu(self)

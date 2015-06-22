@@ -1,8 +1,12 @@
-import sources.ui.game
-from sources.backend.scoreboard import Scoreboard
-from sources.backend.score import Score
+import sys
+import os
+sys.path.append(os.path.join('', 'src'))
 
-sources.game.play()
+from ui.game import Spacekatz
+# from backend.scoreboard import Scoreboard
+# from backend.score import Score
+
+Spacekatz.play()
 
 """
 list = Scoreboard()
