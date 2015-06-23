@@ -19,14 +19,14 @@ class GameMenu:
             print(option)
 
     def get_available_options(self):
-        return [option for option in self.options.keys()]
+        return [option for option in sorted(self.options.keys(), reverse=True)]
 
 
 class StartGameMenu(GameMenu):
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
-            "Start": "start",
+            "Start": "",
             "Scoreboard": "load_scoreboard",
             "Exit": "exit"
         }
@@ -38,4 +38,12 @@ class PauseGameMenu(GameMenu):
         self.options = {
             "Resume": "resume",
             "End game": "end"
+        }
+
+
+class KatNameGameMenu(GameMenu):
+    def __init__(self, game):
+        GameMenu.__init__(self, game)
+        self.options = {
+            "Start": "start"
         }

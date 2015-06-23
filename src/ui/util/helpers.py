@@ -32,3 +32,20 @@ class Helpers:
 		screen.blit(screen_text, text_rect)
 
 		return text_rect
+
+	@staticmethod
+	def ask(screen, question):
+		answer = []
+		Helpers.display_message(screen, question + ": " + "".join(answer))
+		for event in pygame.event.get():
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_BACKSPACE:
+				  	answer = answer[0:-1]
+				elif event.key == pygame.K_RETURN:
+				  	break
+				elif event.key == pygame.K_MINUS:
+				  	answer.append("_")
+				elif event.key <= 127:
+				  	answer.append(chr(event.key))
+		Helpers.display_message(screen, question + ": " + "".join(answer))
+		return "".join(answer)

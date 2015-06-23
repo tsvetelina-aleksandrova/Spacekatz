@@ -1,18 +1,26 @@
 from backend.menus.scoreboard import Scoreboard
-from backend.menus.menus import GameMenu, StartGameMenu, PauseGameMenu
+from backend.menus.menus import GameMenu, StartGameMenu
+from backend.menus.menus import PauseGameMenu, KatNameGameMenu
 from backend.util.board import Board
-# from backend.sprites.kat import Player
+from backend.util.coords import Coords
+from backend.sprites.kat import Kat
+from backend.levels import Level
 
 class Game:
-	def __init__(self, width, height, player_num=1):
+	def __init__(self, width, height):
 		self.scoreboard = Scoreboard()
 		self.board = Board(width, height)
-		self.player_num = player_num
-		# self.players = [Player() for i in range(player_num)]
-		
-		#self.levels = [Level(1), Level(2), 
-		#	Level(3), Level(4), Level(5)]
-
+		self.kat_name = ""
+		self.player = Kat(Coords(0, 0), self.kat_name, self.board)
+		"""
+		self.levels = [
+			Level(self.board, 1), 
+			Level(self.board, 2), 
+			Level(self.board, 3), 
+			Level(self.board, 4), 
+			Level(self.board, 5)
+		]
+		"""
 	def init(self):
 		menu = StartGameMenu(self)
 		menu.display()
@@ -20,7 +28,7 @@ class Game:
 
 	def start(self):
 		self.current_level = 0
-		self.levels[self.current_level].start()
+		# self.levels[self.current_level].start()
 
 	def pause(self):
 		self.levels[self.current_level].pause()
@@ -39,8 +47,7 @@ class Game:
 		self.levels[self.current_level].pause()
 		self.board.clear()
 		print("Game is ended")
-		for player in self.players:
-			self.scoreboard.add(Score(player.name, player.score))
+		self.scoreboard.add(Score(self.kat_name, self.player.score))
 		self.load_scoreboard()
 
 	def exit(self):

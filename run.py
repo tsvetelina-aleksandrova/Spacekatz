@@ -6,7 +6,7 @@ from ui.game import Spacekatz
 # from backend.scoreboard import Scoreboard
 # from backend.score import Score
 
-Spacekatz.play()
+Spacekatz().play()
 
 """
 list = Scoreboard()

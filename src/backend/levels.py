@@ -1,3 +1,4 @@
+
 class Level:
 	def __init__(self, board, lvl):
 		if lvl < 0:
@@ -31,7 +32,9 @@ class Level:
 		self.enemies = []
 		self.strategy = self.enemy_strategies[lvl]
 		for i in range(self.enemy_nums[self.lvl]):
-			self.enemies.append(Bird(self.enemy_init_pos[i].get_position(), self.enemy_strategies[i]))
+			new_bird = Bird(self.enemy_init_pos[i].get_position(), 
+				self.enemy_strategies[i])
+			self.enemies.append(new_bird)
 		print("Level", self.lvl, "started")
 		self.play()
 		
