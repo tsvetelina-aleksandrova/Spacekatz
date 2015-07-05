@@ -23,15 +23,17 @@ class GameMenuUI():
 				self.text_rects.update({option_name: new_text_rect})
 				y_delta += 50
 
-	def handle_event(self, event):
+	# fix this, this sucks
+	def handle_event(self, event, is_special_start=False):
 		if self.is_pending_input:
-			# mouse pressing is not ok
-			if pygame.mouse.get_pressed():
+			
+			if pygame.mouse.get_pressed()[0] == 1:
+				print(pygame.mouse.get_pressed()[0])
 				mouse_pos = pygame.mouse.get_pos()
 				for option_name, rect in self.text_rects.items():
 					if rect.collidepoint(mouse_pos):
 						self.is_pending_input = False
-						if option_name == "Start":
+						if is_special_start and option_name == "Start":
 							self.game_ui.name_menu.is_pending_input = True
 						else: 
 							self.menu.select(option_name)
@@ -43,18 +45,22 @@ class StartGameMenuUI(GameMenuUI):
 		GameMenuUI.__init__(self, screen, game, game_ui)
 		self.menu = StartGameMenu(game)
 
+	def handle_event(self, event, is_special_start=True):
+		GameMenuUI.handle_event(self, event, is_special_start)
+
 
 class KatNameGameMenuUI(GameMenuUI):
 	def __init__(self, screen, game, game_ui=None):
 		GameMenuUI.__init__(self, screen, game, game_ui)
 		self.menu = KatNameGameMenu(game)
 		self.is_pending_input = False
+		self.current_input = ""
 
 	def display(self):
 		GameMenuUI.display(self)
 		if self.is_pending_input:
-			print("getname")
-			Helpers.ask(self.screen, "Name")
+			self.current_input = Helpers.ask(self.screen, "Name", 
+				self.current_input, 0, 50)
 
 
 class PauseGameMenuUI(GameMenuUI):

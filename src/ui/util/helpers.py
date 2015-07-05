@@ -34,9 +34,10 @@ class Helpers:
 		return text_rect
 
 	@staticmethod
-	def ask(screen, question):
-		answer = []
-		Helpers.display_message(screen, question + ": " + "".join(answer))
+	def ask(screen, question, init_input="", x_center_delta=0, y_center_delta=0):
+		answer = list(init_input)
+		Helpers.display_message(screen, question + ": " + "".join(answer), 
+			x_center_delta, y_center_delta)
 		for event in pygame.event.get():
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_BACKSPACE:
@@ -47,5 +48,7 @@ class Helpers:
 				  	answer.append("_")
 				elif event.key <= 127:
 				  	answer.append(chr(event.key))
-		Helpers.display_message(screen, question + ": " + "".join(answer))
+		print(answer)
+		Helpers.display_message(screen, question + ": " + "".join(answer),
+			x_center_delta, y_center_delta)
 		return "".join(answer)

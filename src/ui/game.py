@@ -37,6 +37,7 @@ class Spacekatz:
 				if event.type == pygame.QUIT:
 					game_exit = True
 				start_menu.handle_event(event)
+				self.name_menu.handle_event(event)
 
-			star_field.redraw_stars()
+			# star_field.redraw_stars()
 			pygame.display.update()
