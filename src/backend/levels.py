@@ -40,8 +40,8 @@ class Level:
 		print("here")
 		self.strategy = self.enemy_strategies[self.lvl]
 		for i in range(self.enemy_nums[self.lvl]):
-			new_bird = Bird(next(self.enemy_init_pos[i]), 
-				self.enemy_strategies[i], self.board)
+			new_bird = Bird(next(self.enemy_init_pos[self.lvl]), 
+				self.enemy_strategies[self.lvl], self.board)
 			self.enemies.append(new_bird)
 		print("Level", self.lvl, "started")
 		self.play()

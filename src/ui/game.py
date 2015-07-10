@@ -10,22 +10,27 @@ from ui.menu_ui import ScoreGameMenuUI
 class Spacekatz:
 	def __init__(self):
 		self.event_listeners = []
+		self.actions = {
+			"start": False, 
+			"exit": False, 
+			"resume": False, 
+			"end": False
+			}
 
 	def play(self):
 		pygame.init()
-		const = Helpers.get_constants()
 
-		screen = pygame.display.set_mode((const["size"]["display_width"],
-										const["size"]["display_height"]))
+		self.screen = pygame.display.set_mode((Helpers.const["size"]["display_width"],
+										Helpers.const["size"]["display_height"]))
 		pygame.display.set_caption("Spacekatz")
 
-		self.game = Game(const["size"]["display_width"], 
-			const["size"]["display_height"])
+		self.game = Game(Helpers.const["size"]["display_width"], 
+			Helpers.const["size"]["display_height"])
 
-		name_menu = PlayerNameGameMenuUI(screen, self)
-		score_menu = ScoreGameMenuUI(screen, self)
-		start_menu = StartGameMenuUI(screen, self)
-		pause_menu = PauseGameMenuUI(screen, self)
+		name_menu = PlayerNameGameMenuUI(self.screen, self)
+		score_menu = ScoreGameMenuUI(self.screen, self)
+		start_menu = StartGameMenuUI(self.screen, self)
+		pause_menu = PauseGameMenuUI(self.screen, self)
 
 		start_menu.set_next_menus({
 			"Start": name_menu,
@@ -40,42 +45,58 @@ class Spacekatz:
 		self.event_listeners.append(start_menu)
 		self.event_listeners.append(pause_menu)
 
+		start_menu.is_listening = True
 
 		clock = pygame.time.Clock()
-		star_field = StarField(screen, 250)
-		game_exit = False
 
-		screen.fill(const["color"]["black"])
+		self.game_exit = False
 
-		while not game_exit:
+		self.starfield_backgr = StarField(self.screen, 250)
+
+		while not self.game_exit:
 			clock.tick(60)
-			screen.fill(const["color"]["black"])
+			self.screen.fill(Helpers.const["color"]["black"])
 
+			# only the ones that are currently listening
+			# will be displayed
 			start_menu.display()
+			score_menu.display()
+			name_menu.display()
+			pause_menu.display()
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					game_exit = True
+					self.game_exit = True
 				for listener in self.event_listeners:
 					listener.notify(event)
+			
+			for action_name, value in self.actions.items():
+				if value:
+					getattr(self, action_name + "_action")()
 
-			# star_field.redraw_stars()
-			pygame.display.update()
+			pygame.display.flip()
 
-	def start(self):
-		self.game.start()
+	def start_action(self):
+		#self.game.start()
+		
+		kat_img = Helpers.get_image('/img/bird.png')
+		self.screen.fill(Helpers.const["color"]["black"])
+		self.screen.blit(kat_img, (100, 100))
 
-	def pause(self):
+		self.starfield_backgr.redraw_stars()
+
+	def pause_action(self):
 		pass
 
-	def resume(self):
+	def resume_action(self):
 		pass
 
-	def end(self):
+	def end_action(self):
 		pass
 
-	def exit(self):
+	def exit_action(self):
 		print("Game is exited")
+		self.game_exit = True
 
-	def next_level(self):
+	def next_level_action(self):
 		pass
