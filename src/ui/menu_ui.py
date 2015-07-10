@@ -7,9 +7,9 @@ from backend.listener import Listener
 from backend.menus.scoreboard import Scoreboard
 
 class GameMenuUI(Listener):
-	def __init__(self, screen, game):
+	def __init__(self, game):
 		Listener.__init__(self)
-		self.screen = screen
+		self.screen = game.screen
 		self.game = game
 		self.menu = GameMenu(game)
 		self.text_rects = {}
@@ -46,14 +46,14 @@ class GameMenuUI(Listener):
 
 
 class StartGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game):
-		GameMenuUI.__init__(self, screen, game)
+	def __init__(self, game):
+		GameMenuUI.__init__(self, game)
 		self.menu = StartGameMenu(game)
 
 
 class PlayerNameGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game):
-		GameMenuUI.__init__(self, screen, game)
+	def __init__(self, game):
+		GameMenuUI.__init__(self, game)
 		self.menu = PlayerNameGameMenu(game)
 		self.current_input = ""
 
@@ -66,8 +66,8 @@ class PlayerNameGameMenuUI(GameMenuUI):
 
 
 class ScoreGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game):
-		GameMenuUI.__init__(self, screen, game)
+	def __init__(self, game):
+		GameMenuUI.__init__(self, game)
 		self.menu = ScoreGameMenu(game)
 
 	def display(self):
@@ -83,6 +83,6 @@ class ScoreGameMenuUI(GameMenuUI):
 
 
 class PauseGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game):
-		GameMenuUI.__init__(self, screen, game)
+	def __init__(self, game):
+		GameMenuUI.__init__(self, game)
 		self.menu = PauseGameMenu(game)

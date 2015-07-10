@@ -70,3 +70,4 @@ class Helpers:
 			image = pygame.image.load(canonicalized_path).convert()
 			Helpers._image_library[path] = image
 		return image
+		

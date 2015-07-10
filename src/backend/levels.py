@@ -11,9 +11,7 @@ class Level:
 		if lvl > 5:
 			lvl = 5
 		self.lvl = lvl
-
 		self.board = board
-		self.is_paused = False
 
 	def start(self, screen=None, bullet_group=None, bird_group=None):
 		diag_dirs = [
@@ -37,7 +35,6 @@ class Level:
 		]
 
 		self.enemies = []
-		print("here")
 		self.strategy = self.enemy_strategies[self.lvl]
 		for i in range(self.enemy_nums[self.lvl]):
 			new_bird = BirdUI(screen, next(self.enemy_init_pos[self.lvl]), 
@@ -46,13 +43,3 @@ class Level:
 			new_bird.add(bird_group)
 			print(new_bird.pos)
 		print("Level", self.lvl, "started")
-		# self.play()
-		
-	def play(self):
-		while not self.is_paused:
-			for enemy in self.enemies:
-				enemy.shoot()
-				enemy.move()
-
-	def pause(self):
-		self.is_paused = True

@@ -21,21 +21,15 @@ class Spacekatz:
 			"end": False
 			}
 		self.current_event = None
-
-	def play(self):
-		pygame.init()
-
-		self.screen = pygame.display.set_mode((Helpers.const["size"]["display_width"],
-										Helpers.const["size"]["display_height"]))
-		pygame.display.set_caption("Spacekatz")
-
-		self.game = Game(Helpers.const["size"]["display_width"], 
+		self.game_size = (Helpers.const["size"]["display_width"],
 			Helpers.const["size"]["display_height"])
 
-		self.name_menu = PlayerNameGameMenuUI(self.screen, self)
-		score_menu = ScoreGameMenuUI(self.screen, self)
-		start_menu = StartGameMenuUI(self.screen, self)
-		pause_menu = PauseGameMenuUI(self.screen, self)
+		self.game = Game(self.game_size)
+
+		self.name_menu = PlayerNameGameMenuUI(self)
+		score_menu = ScoreGameMenuUI(self)
+		start_menu = StartGameMenuUI(self)
+		pause_menu = PauseGameMenuUI(self)
 
 		start_menu.set_next_menus({
 			"Start": self.name_menu,
@@ -51,12 +45,16 @@ class Spacekatz:
 		self.event_listeners.append(pause_menu)
 
 		start_menu.is_listening = True
-
-		clock = pygame.time.Clock()
-
 		self.game_exit = False
 
+	def play(self):
+		pygame.init()
+
+		self.screen = pygame.display.set_mode(self.game_size)
+		pygame.display.set_caption("Spacekatz")
+
 		self.starfield_backgr = StarField(self.screen, 250)
+		clock = pygame.time.Clock()
 
 		kat_name = self.name_menu.current_input
 		self.kat_group = Group()
@@ -68,7 +66,7 @@ class Spacekatz:
 		self.kat.add(self.kat_group)
 
 		self.game.start(self.screen, self.bullet_group, self.bird_group)
-		
+
 		while not self.game_exit:
 			clock.tick(60)
 			self.screen.fill(Helpers.const["color"]["black"])
@@ -94,26 +92,26 @@ class Spacekatz:
 
 			pygame.display.flip()
 
-	def start_action(self):
-		
+	def start_action(self):	
 		self.screen.fill(Helpers.const["color"]["black"])
-
 		self.starfield_backgr.redraw_stars()
 
 		self.kat.handle_event(self.current_event)
 
+		Helpers.display_message(self.screen, 
+			"Score: " + str(self.kat.kat.score), 80, -200)
+		Helpers.display_message(self.screen, 
+			"Health: " + str(self.kat.kat.health), 80, 200)
+		Helpers.display_message(self.screen, 
+			self.kat.kat.name, 50, 50)
+
 		self.kat_group.update(1)
-		self.kat_group.draw(self.screen)
-
-		Helpers.display_message(self.screen, "Score: " + str(self.kat.kat.score), 80, -200)
-		Helpers.display_message(self.screen, "Health: " + str(self.kat.kat.health), 80, 200)
-		Helpers.display_message(self.screen, "" + self.kat.kat.name, 50, 50)
-
 		self.bullet_group.update(0.1)
-		self.bullet_group.draw(self.screen)
-    	
 		self.bird_group.update(0.5)
+
+		self.kat_group.draw(self.screen)
 		self.bird_group.draw(self.screen)
+		self.bullet_group.draw(self.screen)
 
 		pygame.display.flip()
 		

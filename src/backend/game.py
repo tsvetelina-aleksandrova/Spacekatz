@@ -7,9 +7,9 @@ from backend.sprites.kat import Kat
 from backend.levels import Level
 
 class Game:
-	def __init__(self, width, height):
+	def __init__(self, size):
 		self.scoreboard = Scoreboard()
-		self.board = Board(width, height)
+		self.board = Board(size)
 		self.kat_name = ""
 		self.player = Kat(Coords(0, 0), self.kat_name, self.board)
 		
