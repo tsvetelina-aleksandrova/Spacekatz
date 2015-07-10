@@ -1,4 +1,5 @@
-# iterators that provide init. positions for enemies
+from backend.util.coords import Coords
+
 
 class SingleBlockInitPos():
 	def __init__(self, row_num=5, col_num=6):
@@ -9,20 +10,21 @@ class SingleBlockInitPos():
 
 	def __iter__(self):
 		return self
+
 	def __next__ (self): 
-		if self.current_row == self.row_num and
-				self.current_col == self.col_num:
-			raise StopIteration
 		if self.current_col == self.col_num:
+			if self.current_row == self.row_num:
+				raise StopIteration
 			self.current_col = 0
 			self.current_row += 1
 		new_coords = Coords(self.current_col + 10, self.current_row + 10)
 		self.current_col += 1
+		print(new_coords)
 		return new_coords
 
 
 class DiagInitPos():
-	def __init__(self, enemy_num, direction):
+	def __init__(self, direction, row_num=5, col_num=6):
 		self.current_row = 0
 		self.current_col = 0
 		self.row_num = row_num
@@ -33,10 +35,9 @@ class DiagInitPos():
 		return self
 
 	def __next__ (self): 
-		if self.current_row == self.row_num and
-				self.current_col == self.col_num:
-			raise StopIteration
 		if self.current_col == self.col_num:
+			if self.current_row == self.row_num:
+				raise StopIteration
 			self.current_col = 0
 			self.current_row += 1
 		new_coords = Coords(self.current_col + 10, self.current_row + 10)
@@ -55,15 +56,17 @@ class BlockInitPos():
 		return self
 
 	def __next__ (self): 
-		if self.current_row == self.row_num and
-				self.current_col == self.col_num:
-			raise StopIteration
+		"""
 		if self.current_col == self.col_num:
+			if self.current_row == self.row_num:
+				raise StopIteration
 			self.current_col = 0
 			self.current_row += 1
 		new_coords = Coords(self.current_col + 10, self.current_row + 10)
 		self.current_col += 1
 		return new_coords
+		"""
+		return Coords(10, 10)
 
 		
 class SingleInitPos():

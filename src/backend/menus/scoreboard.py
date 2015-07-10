@@ -21,8 +21,9 @@ class Scoreboard:
         scores_list = []
         scores_dict = self.db_score_worker.get_all()
         for score_info in scores_dict:
+            print(score_info)
             score_obj = Score(score_info["player"], score_info["points"])
-            score_obj.set_id(score_info["_id"])
+            score_obj.set_id(str(score_info["_id"]))
             scores_list.append(score_obj)
         return scores_list
 

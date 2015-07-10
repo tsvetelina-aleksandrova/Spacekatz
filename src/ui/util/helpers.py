@@ -48,7 +48,13 @@ class Helpers:
 				  	answer.append("_")
 				elif event.key <= 127:
 				  	answer.append(chr(event.key))
-		print(answer)
 		Helpers.display_message(screen, question + ": " + "".join(answer),
 			x_center_delta, y_center_delta)
 		return "".join(answer)
+
+	@staticmethod
+	def get_mouse_click_pos():
+		mouse_pos = 0
+		if pygame.mouse.get_pressed()[0] == 1:
+			mouse_pos = pygame.mouse.get_pos()
+		return mouse_pos

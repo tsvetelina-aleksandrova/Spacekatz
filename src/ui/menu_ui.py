@@ -1,21 +1,26 @@
 import pygame
 from backend.menus.menus import GameMenu, StartGameMenu
-from backend.menus.menus import PauseGameMenu, KatNameGameMenu
+from backend.menus.menus import PauseGameMenu, PlayerNameGameMenu
+from backend.menus.menus import ScoreGameMenu
 from ui.util.helpers import Helpers 
+from backend.listener import Listener
+from backend.menus.scoreboard import Scoreboard
 
-
-class GameMenuUI():
-	def __init__(self, screen, game, game_ui=None):
+class GameMenuUI(Listener):
+	def __init__(self, screen, game):
+		Listener.__init__(self)
 		self.screen = screen
 		self.game = game
 		self.menu = GameMenu(game)
 		self.text_rects = {}
-		self.is_pending_input = True
-		if game_ui:
-			self.game_ui = game_ui
+		self.next_menus = None
+
+	def set_next_menus(self, next_menus):
+		# chain
+		self.next_menus = next_menus
 
 	def display(self):
-		if self.is_pending_input:
+		if self.is_listening:
 			y_delta = 0
 			for option_name in self.menu.get_available_options():
 				new_text_rect = Helpers.display_message(self.screen, 
@@ -23,47 +28,73 @@ class GameMenuUI():
 				self.text_rects.update({option_name: new_text_rect})
 				y_delta += 50
 
-	# fix this, this sucks
-	def handle_event(self, event, is_special_start=False):
-		if self.is_pending_input:
-			
-			if pygame.mouse.get_pressed()[0] == 1:
-				print(pygame.mouse.get_pressed()[0])
-				mouse_pos = pygame.mouse.get_pos()
+	def handle_event(self, event):
+		if self.is_listening:
+			mouse_pos = Helpers.get_mouse_click_pos()
+			if mouse_pos:
 				for option_name, rect in self.text_rects.items():
 					if rect.collidepoint(mouse_pos):
-						self.is_pending_input = False
-						if is_special_start and option_name == "Start":
-							self.game_ui.name_menu.is_pending_input = True
-						else: 
-							self.menu.select(option_name)
-						return
+						self.is_listening = False
+
+						if self.next_menus is not None:
+							opt_next_menu = self.next_menus[option_name]
+							if opt_next_menu:
+								opt_next_menu.is_listening = True
+								opt_next_menu.display()
+								return
+						# no next menus
+						self.menu.select(option_name)
 
 
 class StartGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game, game_ui=None):
-		GameMenuUI.__init__(self, screen, game, game_ui)
+	def __init__(self, screen, game):
+		GameMenuUI.__init__(self, screen, game)
 		self.menu = StartGameMenu(game)
 
-	def handle_event(self, event, is_special_start=True):
-		GameMenuUI.handle_event(self, event, is_special_start)
 
-
-class KatNameGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game, game_ui=None):
-		GameMenuUI.__init__(self, screen, game, game_ui)
-		self.menu = KatNameGameMenu(game)
-		self.is_pending_input = False
+class PlayerNameGameMenuUI(GameMenuUI):
+	def __init__(self, screen, game):
+		GameMenuUI.__init__(self, screen, game)
+		self.menu = PlayerNameGameMenu(game)
+		self.is_listening = False
 		self.current_input = ""
 
 	def display(self):
-		GameMenuUI.display(self)
-		if self.is_pending_input:
+		# ok, this is not cool.
+		# but i don't have other ideas yet
+		while self.is_listening:
+			self.screen.fill(Helpers.get_constants()["color"]["black"])
+			GameMenuUI.display(self)
 			self.current_input = Helpers.ask(self.screen, "Name", 
 				self.current_input, 0, 50)
+			for event in pygame.event.get():
+				self.handle_event(event)
+			pygame.display.update()
+
+
+class ScoreGameMenuUI(GameMenuUI):
+	def __init__(self, screen, game):
+		GameMenuUI.__init__(self, screen, game)
+		self.menu = ScoreGameMenu(game)
+		self.is_listening = False
+
+	def display(self):
+		while self.is_listening:
+			self.screen.fill(Helpers.get_constants()["color"]["black"])
+			scoreboard = Scoreboard()
+			y_delta = -100
+			for score in scoreboard.get_all():	
+				Helpers.display_message(self.screen, 
+					str(score), 0, y_delta)
+				y_delta += 50
+
+			GameMenuUI.display(self)
+			for event in pygame.event.get():
+				self.handle_event(event)
+			pygame.display.update()
 
 
 class PauseGameMenuUI(GameMenuUI):
-	def __init__(self, screen, game, game_ui=None):
-		GameMenuUI.__init__(self, screen, game, game_ui)
+	def __init__(self, screen, game):
+		GameMenuUI.__init__(self, screen, game)
 		self.menu = PauseGameMenu(game)

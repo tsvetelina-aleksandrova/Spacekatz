@@ -6,17 +6,13 @@ class GameMenu:
     def select(self, option):
         if option not in self.options.keys():
             raise ValueError("Unexpected menu option was selected")
-        game_option = getattr(self.game, self.options[option])
 
+        game_option = self.options[option]
         if callable(game_option):
             game_option()
             print("Selected menu action was executed")
-        else:
+        elif not game_option == "":
             raise ValueError("Menu option is not valid")
-
-    def display(self):
-        for option in self.options:
-            print(option)
 
     def get_available_options(self):
         return [option for option in sorted(self.options.keys(), reverse=True)]
@@ -27,8 +23,8 @@ class StartGameMenu(GameMenu):
         GameMenu.__init__(self, game)
         self.options = {
             "Start": "",
-            "Scoreboard": "load_scoreboard",
-            "Exit": "exit"
+            "Scoreboard": "",
+            "Exit": self.game.exit
         }
 
 
@@ -36,14 +32,21 @@ class PauseGameMenu(GameMenu):
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
-            "Resume": "resume",
-            "End game": "end"
+            "Resume": self.game.resume,
+            "End game": self.game.end
         }
 
 
-class KatNameGameMenu(GameMenu):
+class PlayerNameGameMenu(GameMenu):
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
-            "Start": "start"
+            "Start": self.game.start
+        }
+
+class ScoreGameMenu(GameMenu):
+    def __init__(self, game):
+        GameMenu.__init__(self, game)
+        self.options = {
+            "Back": ""
         }

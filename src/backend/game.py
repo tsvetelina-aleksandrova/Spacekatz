@@ -1,6 +1,6 @@
 from backend.menus.scoreboard import Scoreboard
 from backend.menus.menus import GameMenu, StartGameMenu
-from backend.menus.menus import PauseGameMenu, KatNameGameMenu
+from backend.menus.menus import PauseGameMenu, PlayerNameGameMenu
 from backend.util.board import Board
 from backend.util.coords import Coords
 from backend.sprites.kat import Kat
@@ -12,7 +12,7 @@ class Game:
 		self.board = Board(width, height)
 		self.kat_name = ""
 		self.player = Kat(Coords(0, 0), self.kat_name, self.board)
-		"""
+		
 		self.levels = [
 			Level(self.board, 1), 
 			Level(self.board, 2), 
@@ -20,24 +20,21 @@ class Game:
 			Level(self.board, 4), 
 			Level(self.board, 5)
 		]
-		"""
-	def init(self):
+		
+	def play(self):
 		menu = StartGameMenu(self)
 		menu.display()
-		# get user input
 
 	def start(self):
 		self.current_level = 0
-		# self.levels[self.current_level].start()
+		print(self.current_level)
+		print(self.levels[self.current_level])
+		self.levels[self.current_level].start()
 
 	def pause(self):
 		self.levels[self.current_level].pause()
 		menu = PauseGameMenu(self)
 		menu.display()
-		# get user input
-		
-	def load_scoreboard(self):
-		self.scoreboard.display()
 
 	def resume(self):
 		print("Gameplay is resumed")
@@ -52,7 +49,6 @@ class Game:
 
 	def exit(self):
 		print("Game is exited")
-		# exit
 
 	def next_level(self):
 		self.levels[self.current_level].pause()

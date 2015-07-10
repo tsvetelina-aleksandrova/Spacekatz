@@ -1,3 +1,8 @@
+from backend.util.board import Board
+from backend.sprites.bird_move_strategies import *
+from backend.sprites.bird_init_pos import *
+from backend.sprites.bird import Bird
+
 
 class Level:
 	def __init__(self, board, lvl):
@@ -6,9 +11,14 @@ class Level:
 		if lvl > 5:
 			lvl = 5
 		self.lvl = lvl
+
+		self.board = board
+		self.is_paused = False
+
+	def start(self):
 		diag_dirs = [
-			DiagonalStrategy.get_available_directions()[2],
-			DiagonalStrategy.get_available_directions()[1]
+			DiagonalStrategy.directions[2],
+			DiagonalStrategy.directions[1]
 		]
 		self.enemy_strategies = [
 			InPlaceStrategy(),
@@ -24,16 +34,14 @@ class Level:
 			DiagInitPos(20, diag_dirs[1]),
 			BlockInitPos(),
 			SingleInitPos()
-		] 
-		self.board = board
-		self.is_paused = False
+		]
 
-	def start(self):
 		self.enemies = []
-		self.strategy = self.enemy_strategies[lvl]
+		print("here")
+		self.strategy = self.enemy_strategies[self.lvl]
 		for i in range(self.enemy_nums[self.lvl]):
-			new_bird = Bird(self.enemy_init_pos[i].get_position(), 
-				self.enemy_strategies[i])
+			new_bird = Bird(next(self.enemy_init_pos[i]), 
+				self.enemy_strategies[i], self.board)
 			self.enemies.append(new_bird)
 		print("Level", self.lvl, "started")
 		self.play()
