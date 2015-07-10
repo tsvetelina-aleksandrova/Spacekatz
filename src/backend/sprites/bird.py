@@ -1,4 +1,6 @@
 from random import uniform
+from backend.sprites.bullet import Bullet
+
 
 class Bird:
 	def __init__(self, position, move_strategy, board):
@@ -14,14 +16,14 @@ class Bird:
 		self.position.y += self.move_strategy.get_delta_y()
 		print("Moved according to the strategy")
 
-		if self.board[self.position.x][self.position.y] == "^":
+		if self.board.matrix[self.position.x][self.position.y] == "^":
 			kat = board.get_kat_on_pos(self.position.x, self.position.y)
 			kat.get_shot()
 
 	def shoot(self):
 		if uniform(0, 10) > 8:
 			bullet = Bullet(self.position, self.strength, self.board, False)
-			bullet.move()
+			# bullet.move()
 
 	def get_shot(self, strength):
 		print("Bird got shot")

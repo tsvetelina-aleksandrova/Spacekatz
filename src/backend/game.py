@@ -25,11 +25,11 @@ class Game:
 		menu = StartGameMenu(self)
 		menu.display()
 
-	def start(self):
+	def start(self, screen=None, bullet_group=None, bird_group=None):
 		self.current_level = 0
 		print(self.current_level)
 		print(self.levels[self.current_level])
-		self.levels[self.current_level].start()
+		self.levels[self.current_level].start(screen, bullet_group, bird_group)
 
 	def pause(self):
 		self.levels[self.current_level].pause()

@@ -17,7 +17,7 @@ class SingleBlockInitPos():
 				raise StopIteration
 			self.current_col = 0
 			self.current_row += 1
-		new_coords = Coords(self.current_col + 10, self.current_row + 10)
+		new_coords = Coords(self.current_col*10 + 10, self.current_row*10 + 10)
 		self.current_col += 1
 		print(new_coords)
 		return new_coords

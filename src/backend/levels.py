@@ -1,7 +1,7 @@
 from backend.util.board import Board
 from backend.sprites.bird_move_strategies import *
 from backend.sprites.bird_init_pos import *
-from backend.sprites.bird import Bird
+from ui.sprites.bird_ui import BirdUI
 
 
 class Level:
@@ -15,7 +15,7 @@ class Level:
 		self.board = board
 		self.is_paused = False
 
-	def start(self):
+	def start(self, screen=None, bullet_group=None, bird_group=None):
 		diag_dirs = [
 			DiagonalStrategy.directions[2],
 			DiagonalStrategy.directions[1]
@@ -40,11 +40,13 @@ class Level:
 		print("here")
 		self.strategy = self.enemy_strategies[self.lvl]
 		for i in range(self.enemy_nums[self.lvl]):
-			new_bird = Bird(next(self.enemy_init_pos[self.lvl]), 
-				self.enemy_strategies[self.lvl], self.board)
+			new_bird = BirdUI(screen, next(self.enemy_init_pos[self.lvl]), 
+				self.enemy_strategies[self.lvl], self.board, bullet_group)
 			self.enemies.append(new_bird)
+			new_bird.add(bird_group)
+			print(new_bird.pos)
 		print("Level", self.lvl, "started")
-		self.play()
+		# self.play()
 		
 	def play(self):
 		while not self.is_paused:

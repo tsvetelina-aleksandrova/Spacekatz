@@ -8,6 +8,7 @@ from ui.menu_ui import PlayerNameGameMenuUI
 from ui.menu_ui import ScoreGameMenuUI
 from backend.util.coords import Coords
 from ui.sprites.kat_ui import KatUI
+from ui.sprites.bird_ui import BirdUI
 from pygame.sprite import Group
 
 class Spacekatz:
@@ -60,11 +61,14 @@ class Spacekatz:
 		kat_name = self.name_menu.current_input
 		self.kat_group = Group()
 		self.bullet_group = Group()
+		self.bird_group = Group()
 
 		self.kat = KatUI(self.screen, Coords(100, 100), 
 			kat_name, self.game.board, self.bullet_group) 
 		self.kat.add(self.kat_group)
 
+		self.game.start(self.screen, self.bullet_group, self.bird_group)
+		
 		while not self.game_exit:
 			clock.tick(60)
 			self.screen.fill(Helpers.const["color"]["black"])
@@ -91,7 +95,7 @@ class Spacekatz:
 			pygame.display.flip()
 
 	def start_action(self):
-		#self.game.start()
+		
 		self.screen.fill(Helpers.const["color"]["black"])
 
 		self.starfield_backgr.redraw_stars()
@@ -101,9 +105,16 @@ class Spacekatz:
 		self.kat_group.update(1)
 		self.kat_group.draw(self.screen)
 
-		self.bullet_group.update(1)
+		Helpers.display_message(self.screen, "Score: " + str(self.kat.kat.score), 80, -200)
+		Helpers.display_message(self.screen, "Health: " + str(self.kat.kat.health), 80, 200)
+		Helpers.display_message(self.screen, "" + self.kat.kat.name, 50, 50)
+
+		self.bullet_group.update(0.1)
 		self.bullet_group.draw(self.screen)
-    
+    	
+		self.bird_group.update(0.5)
+		self.bird_group.draw(self.screen)
+
 		pygame.display.flip()
 		
 

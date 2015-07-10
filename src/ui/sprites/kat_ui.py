@@ -26,7 +26,7 @@ class KatUI(Sprite):
 			]
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_SPACE:
-				self.kat.shoot()
+				# self.kat.shoot()
 				bullet_coords = Coords(self.rect.center[0],
 					self.rect.center[1])
 				new_bullet = BulletUI(self.screen, bullet_coords, 
@@ -36,8 +36,8 @@ class KatUI(Sprite):
 			for move_data in kat_moves_data:
 				if event.key == move_data[0]:
 					move_value = move_data[1]
-					self.kat.move(move_value[0], move_value[1])
-					self.pos = (self.pos[0] + move_value[0], self.pos[1] + move_value[1])
+					# self.kat.move(move_value[0], move_value[1])
 					old_rect_x = self.rect.center[0]
 					old_rect_y = self.rect.center[1]
-					self.rect.center = (old_rect_x + move_value[0], old_rect_y + move_value[1])
+					self.rect.center = (old_rect_x + move_value[0], 
+						old_rect_y + move_value[1])

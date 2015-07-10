@@ -37,8 +37,8 @@ class GameMenuUI(Listener):
 						self.is_listening = False
 
 						if self.next_menus is not None:
-							opt_next_menu = self.next_menus[option_name]
-							if opt_next_menu:
+							if option_name in self.next_menus.keys():
+								opt_next_menu = self.next_menus[option_name]
 								opt_next_menu.is_listening = True
 								return
 						# no next menus

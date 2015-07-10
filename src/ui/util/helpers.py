@@ -24,7 +24,7 @@ class Helpers:
 	def display_message(screen, msg, x_center_delta=0, y_center_delta=0):
 		center_x = (Helpers.const["size"]["display_width"] / 2) + x_center_delta
 		center_y = (Helpers.const["size"]["display_height"] / 2) + y_center_delta
-		msg_font =  Font(None, 50)
+		msg_font =  Font(None, 30)
 
 		screen_text = msg_font.render(msg, True, Helpers.const["color"]["white"])
 		text_rect = screen_text.get_rect()
