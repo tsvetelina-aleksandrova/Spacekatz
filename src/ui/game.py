@@ -1,6 +1,7 @@
 import pygame
 import pygame.event
 from backend.game import Game
+from backend.sprites.kat import Kat
 from ui.util.background import StarField
 from ui.util.helpers import Helpers
 from ui.menu_ui import StartGameMenuUI, PauseGameMenuUI
@@ -23,36 +24,35 @@ class Spacekatz:
 		self.current_event = None
 		self.game_size = (Helpers.const["size"]["display_width"],
 			Helpers.const["size"]["display_height"])
+		
+		pygame.init()
+		self.screen = pygame.display.set_mode(self.game_size)
+		pygame.display.set_caption("Spacekatz")
 
 		self.game = Game(self.game_size)
 
 		self.name_menu = PlayerNameGameMenuUI(self)
-		score_menu = ScoreGameMenuUI(self)
-		start_menu = StartGameMenuUI(self)
-		pause_menu = PauseGameMenuUI(self)
+		self.score_menu = ScoreGameMenuUI(self)
+		self.start_menu = StartGameMenuUI(self)
+		self.pause_menu = PauseGameMenuUI(self)
 
-		start_menu.set_next_menus({
+		self.start_menu.set_next_menus({
 			"Start": self.name_menu,
-			"Scoreboard": score_menu
+			"Scoreboard": self.score_menu
 		})
-		score_menu.set_next_menus({
-			"Back": start_menu
+		self.score_menu.set_next_menus({
+			"Back": self.start_menu
 		})
 		
 		self.event_listeners.append(self.name_menu)
-		self.event_listeners.append(score_menu)
-		self.event_listeners.append(start_menu)
-		self.event_listeners.append(pause_menu)
+		self.event_listeners.append(self.score_menu)
+		self.event_listeners.append(self.start_menu)
+		self.event_listeners.append(self.pause_menu)
 
-		start_menu.is_listening = True
+		self.start_menu.is_listening = True
 		self.game_exit = False
 
 	def play(self):
-		pygame.init()
-
-		self.screen = pygame.display.set_mode(self.game_size)
-		pygame.display.set_caption("Spacekatz")
-
 		self.starfield_backgr = StarField(self.screen, 250)
 		clock = pygame.time.Clock()
 
@@ -61,8 +61,9 @@ class Spacekatz:
 		self.bullet_group = Group()
 		self.bird_group = Group()
 
-		self.kat = KatUI(self.screen, Coords(100, 100), 
-			kat_name, self.game.board, self.bullet_group) 
+		kat_back = Kat(Coords(100, 100), 
+			kat_name, self.game.board)
+		self.kat = KatUI(self.screen, kat_back, self.bullet_group) 
 		self.kat.add(self.kat_group)
 
 		self.game.start(self.screen, self.bullet_group, self.bird_group)
@@ -73,10 +74,10 @@ class Spacekatz:
 
 			# only the ones that are currently listening
 			# will be displayed
-			start_menu.display()
-			score_menu.display()
+			self.start_menu.display()
+			self.score_menu.display()
 			self.name_menu.display()
-			pause_menu.display()
+			self.pause_menu.display()
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:

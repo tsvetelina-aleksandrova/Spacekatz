@@ -4,30 +4,26 @@ from backend.sprites.bird import Bird
 from backend.util.coords import Coords
 from ui.util.helpers import Helpers
 from ui.sprites.bullet_ui import BulletUI
-from random import uniform
 
 
 class BirdUI(Sprite):
-	def __init__(self, screen, start_pos, move_strategy, board, bullet_group):
+	def __init__(self, screen, bird, bullet_group):
 		Sprite.__init__(self)
-		self.pos = (start_pos.x, start_pos.y)  
-		self.image = Helpers.get_image('/img/bird.png')
-		# self.bird = Bird(start_pos, strength, board)
-		self.rect = self.image.get_rect()
+		self.bird = bird
+		self.pos = (bird.position.x, bird.position.y)  
 		self.screen = screen
 		self.bullet_group = bullet_group
-		self.move_strategy = move_strategy
-		self.board = board
+		self.image = Helpers.get_image('/img/bird.png')
+		self.rect = self.image.get_rect()
 
 	def update(self, seconds):
-		# self.bird.move(0, -10)
-		old_rect_x = self.rect.center[0]
-		old_rect_y = self.rect.center[1]
-		self.rect.center = (old_rect_x + self.move_strategy.get_delta_x(),
-			old_rect_y + self.move_strategy.get_delta_y())
-		if uniform(0, 10) > 9.9:
-			bullet_coords = Coords(self.rect.center[0],
-				self.rect.center[1])
-			new_bullet = BulletUI(self.screen, bullet_coords, 
-				self.board, 3, False)
-			self.bullet_group.add(new_bullet)
+		# add collision checks
+		#
+		self.bird.move()
+		# bird's position has changed
+		self.rect.center = (self.bird.position.x, self.bird.position.y)
+		# shoot sometimes
+		bullet = self.bird.shoot()
+		if bullet is not None:
+			new_bullet_ui = BulletUI(self.screen, bullet)
+			self.bullet_group.add(new_bullet_ui)

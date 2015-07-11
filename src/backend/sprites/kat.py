@@ -14,13 +14,15 @@ class Kat:
 	def move(self, x_delta=0, y_delta=0):
 		self.position.x += x_delta
 		self.position.y += y_delta
-		if self.board.matrix[self.position.x][self.position.y] == "*":
+		print(self.position.x)
+		print(self.position.y)
+		cell = self.board.matrix[self.position.x][self.position.y]
+		if cell == "*":
 			bird = board.get_bird_on_pos(self.position.x, self.position.y)
 			bird.get_shot()
 
 	def shoot(self):
-		bullet = Bullet(self.position, self.strength, self.board, True)
-		# bullet.move()
+		return Bullet(self.position, self.strength, self.board, True)
 
 	def get_shot(self, strength):
 		print("Kat got shot")

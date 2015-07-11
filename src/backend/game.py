@@ -6,6 +6,7 @@ from backend.util.coords import Coords
 from backend.sprites.kat import Kat
 from backend.levels import Level
 
+
 class Game:
 	def __init__(self, size):
 		self.scoreboard = Scoreboard()
@@ -29,7 +30,7 @@ class Game:
 		self.current_level = 0
 		print(self.current_level)
 		print(self.levels[self.current_level])
-		self.levels[self.current_level].start(screen, bullet_group, bird_group)
+		self.levels[self.current_level].get_enemies()
 
 	def pause(self):
 		self.levels[self.current_level].pause()
@@ -38,7 +39,6 @@ class Game:
 
 	def resume(self):
 		print("Gameplay is resumed")
-		self.levels[self.current_level].start()
 
 	def end(self):
 		self.levels[self.current_level].pause()

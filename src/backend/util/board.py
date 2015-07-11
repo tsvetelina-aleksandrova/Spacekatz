@@ -3,9 +3,10 @@ class Board:
 		self.width = size[0]
 		self.height = size[1]
 		self.matrix = [
-			[0 for x in range(self.width)] 
-			for x in range(self.height)
+			[0 for x in range(self.height )] 
+			for x in range(self.width)
 		]
+		print(len(self.matrix), len(self.matrix[0]))
 
 	def set_enemies(self, enemies):
 		self.enemies = enemies
@@ -31,7 +32,7 @@ class Board:
 						matrix[row][col] = "^"
 
 	def __check_sprite_in_cell(self, sprite, row, col):
-			# position refers to the center of the sprite rect
+		# position refers to the center of the sprite rect
 		# rect is 100x100
 		if row in range(sprite.position.x - 50, 
 				sprite.position.x + 50 + 1):

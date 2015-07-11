@@ -8,14 +8,14 @@ from ui.sprites.bullet_ui import BulletUI
 
 
 class KatUI(Sprite):
-	def __init__(self, screen, start_pos, name, board, bullet_group):
+	def __init__(self, screen, kat, bullet_group):
 		Sprite.__init__(self)
-		self.kat = Kat(start_pos, name, board)
-		self.pos = (start_pos.x, start_pos.y) 
-		self.image = Helpers.get_image('/img/kat.png')
-		self.rect = self.image.get_rect()
+		self.kat = kat
 		self.screen = screen
 		self.bullet_group = bullet_group
+		self.pos = (kat.position.x, kat.position.y) 
+		self.image = Helpers.get_image('/img/kat.png')
+		self.rect = self.image.get_rect()
 
 	def handle_event(self, event):
 		kat_moves_data = [
@@ -23,21 +23,16 @@ class KatUI(Sprite):
 			[pygame.K_DOWN, [0, 10]],
 			[pygame.K_RIGHT, [10, 0]],
 			[pygame.K_LEFT, [-10, 0]]
-			]
+		]
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_SPACE:
-				# self.kat.shoot()
-				bullet_coords = Coords(self.rect.center[0],
-					self.rect.center[1])
-				new_bullet = BulletUI(self.screen, bullet_coords, 
-					self.kat.board, self.kat.strength, True)
-				self.bullet_group.add(new_bullet)
+				bullet = self.kat.shoot()
+				new_bullet_ui = BulletUI(self.screen, bullet)
+				self.bullet_group.add(new_bullet_ui)
 				return
 			for move_data in kat_moves_data:
 				if event.key == move_data[0]:
 					move_value = move_data[1]
-					# self.kat.move(move_value[0], move_value[1])
-					old_rect_x = self.rect.center[0]
-					old_rect_y = self.rect.center[1]
-					self.rect.center = (old_rect_x + move_value[0], 
-						old_rect_y + move_value[1])
+					self.kat.move(move_value[0], move_value[1])
+					self.rect.center = (self.kat.position.x, 
+						self.kat.position.y)
