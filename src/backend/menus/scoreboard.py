@@ -4,6 +4,7 @@ from backend.db.db_worker import DBScoreWorker
 
 
 class Scoreboard:
+
     def __init__(self, db_worker=""):
         self.__type_err_msg = "Only Score elements can be added to Scoreboard"
         if db_worker:

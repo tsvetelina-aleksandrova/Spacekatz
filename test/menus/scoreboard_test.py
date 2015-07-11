@@ -9,6 +9,7 @@ from backend.menus.score import Score
 
 
 class ScoreboardTest(unittest.TestCase):
+
     @mock.patch('backend.db.db_worker.DBScoreWorker')
     def setUp(self, mock_db_worker):
         self.score = Score("Test1", 10)

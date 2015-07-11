@@ -1,4 +1,5 @@
 class GameMenu:
+
     def __init__(self, game):
         self.game = game
         self.options = {}
@@ -9,7 +10,7 @@ class GameMenu:
         game_option = self.options[option]
         if game_option == "":
             return
-        
+
         self.game.actions[game_option] = True
         print(option)
         print("Selected menu action was executed")
@@ -19,6 +20,7 @@ class GameMenu:
 
 
 class StartGameMenu(GameMenu):
+
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
@@ -29,6 +31,7 @@ class StartGameMenu(GameMenu):
 
 
 class PauseGameMenu(GameMenu):
+
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
@@ -38,13 +41,16 @@ class PauseGameMenu(GameMenu):
 
 
 class PlayerNameGameMenu(GameMenu):
+
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {
             "Start": "start"
         }
 
+
 class ScoreGameMenu(GameMenu):
+
     def __init__(self, game):
         GameMenu.__init__(self, game)
         self.options = {

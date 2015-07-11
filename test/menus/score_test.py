@@ -6,6 +6,7 @@ from backend.menus.score import Score
 
 
 class ScoreTest(unittest.TestCase):
+
     def setUp(self):
         self.player_name = "Test"
         self.points = 10
@@ -16,7 +17,8 @@ class ScoreTest(unittest.TestCase):
     def test_increase_score(self):
         incr_points = 20
         self.score.increase_score(incr_points)
-        self.assertEqual(self.score.get_points(), self.points + incr_points)
+        self.assertEqual(
+            self.score.get_points(), self.points + incr_points)
 
     def test_get_as_map(self):
         expected_dict = {

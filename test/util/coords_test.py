@@ -8,6 +8,7 @@ from backend.util.coords import Coords
 
 
 class CoordsTest(unittest.TestCase):
+
     def test_set(self):
         test_x, test_y, test_z = (1, 2, 3)
         test_coords = Coords(test_x, test_y)

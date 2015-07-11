@@ -4,6 +4,7 @@ from backend.db.db_obj import DBObject
 
 
 class DBWorker:
+
     def __init__(self):
         # connect to default port 28017 on localhost
         self.client = MongoClient()
@@ -34,6 +35,7 @@ class DBWorker:
 
 
 class DBScoreWorker(DBWorker):
+
     def __init__(self):
         DBWorker.__init__(self)
         self.db = self.client.spacekatz

@@ -6,6 +6,7 @@ from backend.db.db_obj import DBObject
 
 
 class DBObjectTest(unittest.TestCase):
+
     def setUp(self):
         self.test_db_obj = DBObject()
         self.id_str = "1234"
@@ -29,7 +30,8 @@ class DBObjectTest(unittest.TestCase):
     def test_get_as_dict_with_id(self):
         self.test_db_obj.set_id(self.id_str)
         expected_dict = {"id": "1234"}
-        self.assertDictEqual(self.test_db_obj.get_as_dict(), expected_dict)
+        self.assertDictEqual(
+            self.test_db_obj.get_as_dict(), expected_dict)
 
 
 if __name__ == '__main__':

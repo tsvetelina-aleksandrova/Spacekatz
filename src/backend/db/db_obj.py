@@ -1,4 +1,5 @@
 class DBObject:
+
     def __init__(self):
         self.__id = None
 

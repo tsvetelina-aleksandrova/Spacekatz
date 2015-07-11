@@ -2,6 +2,7 @@ from backend.db.db_obj import DBObject
 
 
 class Score(DBObject):
+
     def __init__(self, player_name="", points=0):
         DBObject.__init__(self)
         self.__player_name = player_name
@@ -20,7 +21,7 @@ class Score(DBObject):
         return {
             "player": self.get_player_name(),
             "points": self.get_points()
-            }
+        }
 
     def __eq__(self, other):
         if not type(self) == type(other):

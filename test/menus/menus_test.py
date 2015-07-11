@@ -9,13 +9,14 @@ from backend.menus.menus import GameMenu, StartGameMenu, PauseGameMenu
 
 
 class GameMenuTest(unittest.TestCase):
+
     @mock.patch('backend.game.Game')
     def setUp(self, mock_game):
         self.mock_game = mock_game
         self.menus = [
             StartGameMenu(mock_game),
             PauseGameMenu(mock_game)
-            ]
+        ]
 
     def test_select(self):
         for menu in self.menus:
